@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1 Mes</title>
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #ffffff;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  h1 {
+    position: absolute;
+    top: 40px;
+    text-align: center;
+    color: #ff009d;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    z-index: 3;
+  }
+
+  .container {
+    position: relative;
+    width: 320px;
+    height: 260px;
+    perspective: 1000px;
+    z-index: 2;
+    transition: transform 1s ease;
+  }
+
+  .envelope {
+    position: absolute;
+    width: 100%;
+    height: 200px;
+    bottom: 0;
+    background: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    overflow: hidden;
+    z-index: 1;
+    transition: opacity 0.6s ease;
+  }
+
+  .flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:#ff009d;
+    clip-path: polygon(0 0, 50% 55%, 100% 0);
+    transform-origin: top;
+    transition: transform 0.8s ease;
+    z-index: 3;
+  }
+
+  .letter {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 90%);
+    width: 85%;
+    height: 130px;
+    background: #ed95cb;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    padding: 15px;
+    box-sizing: border-box;
+    text-align: center;
+    opacity: 0;
+    transition: transform 1s ease, opacity 1s ease;
+    z-index: 2;
+  }
+
+  .letter p {
+    margin: 0;
+    color: #444;
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  button {
+    background: #ff009d;
+    border: none;
+    color: white;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+    transition: background 0.3s ease;
+  }
+
+  button:hover {
+    background: #ff4d6d;
+  }
+
+  /* Botón Ver */
+  #openBtn {
+    position: absolute;
+    bottom: -70px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+  }
+
+  /* Botón de pasar página */
+  #nextPageBtn {
+    position: absolute;
+    right: -90px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 6;
+    padding: 10px 20px;
+  }
+
+  /* Segunda página */
+  .page2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 320px;
+    height: 260px;
+    background: #ffe4f1;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 10;
+  }
+
+  .page2 h2 {
+    color: #ff009d;
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+
+  .page2 button {
+    background: #ff009d;
+    color: #fff;
+    font-size: 16px;
+  }
+
+  /* Corazones flotantes */
+  .heart {
+    --size: 24px;
+    position: absolute;
+    width: var(--size);
+    height: var(--size);
+    background: #ff009d;
+    transform: rotate(45deg);
+    animation: float 6s ease-in infinite;
+    opacity: 0.85;
+    pointer-events: none;
+  }
+
+  .heart::before,
+  .heart::after {
+    content: '';
+    position: absolute;
+    width: var(--size);
+    height: var(--size);
+    background: #ff009d;
+    border-radius: 50%;
+  }
+
+  .heart::before {
+    top: calc(-1 * var(--size) / 2);
+    left: 0;
+  }
+
+  .heart::after {
+    left: calc(-1 * var(--size) / 2);
+    top: 0;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0) rotate(45deg); opacity: 0.8; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-100vh) rotate(45deg); opacity: 0; }
+  }
+
+  .open .flap {
+    transform: rotateX(180deg);
+  }
+
+  .open .letter {
+    transform: translate(-50%, -20%);
+    opacity: 1;
+  }
+</style>
+</head>
+<body>
+  <div id="hearts"></div>
+  <h1>¡Llevamos 1 mes!</h1>
+  <h3>Ve a la otra pagina y reproduce la musica</h3>
+
+  <div class="container" id="envelopeContainer">
+    <!-- Carta -->
+    <div class="envelope" id="envelope">
+      <div class="flap"></div>
+      <div class="letter">
+        <p>💌 ¡Hola! Esta es una carta especial para ti. Aquí puedes poner tu mensaje personal. 💖</p>
+      </div>
+    </div>
+
+    <!-- Botón Ver -->
+    <button id="openBtn">Ver</button>
+
+    <!-- Segunda página -->
+    <div class="page2" id="page2">
+      <h2>Te dedico esta canción</h2>
+      <button id="musicBtn">▶ Reproducir</button>
+      <audio id="song" src="Cariño.mp3"></audio>
+    </div>
+
+    <!-- Botón de cambio de página -->
+    <button id="nextPageBtn">→</button>
+  </div>
+
+<script>
+  const envelope = document.getElementById("envelope");
+  const openBtn = document.getElementById("openBtn");
+  const nextPageBtn = document.getElementById("nextPageBtn");
+  const page2 = document.getElementById("page2");
+  const musicBtn = document.getElementById("musicBtn");
+  const song = document.getElementById("song");
+  const heartsContainer = document.getElementById("hearts");
+
+  // Abrir carta
+  openBtn.addEventListener("click", () => {
+    envelope.classList.toggle("open");
+    openBtn.textContent = envelope.classList.contains("open") ? "Cerrar" : "Ver";
+  });
+
+  // Pasar de página
+  nextPageBtn.addEventListener("click", () => {
+    const isOnPage2 = page2.style.display === "flex";
+    if (isOnPage2) {
+      page2.style.display = "none";
+      envelope.style.opacity = "1";
+      openBtn.style.display = "block"; // ← vuelve a mostrar el botón "Ver"
+      nextPageBtn.textContent = "→";
+    } else {
+      page2.style.display = "flex";
+      envelope.style.opacity = "0";
+      openBtn.style.display = "none"; // ← oculta el botón "Ver"
+      nextPageBtn.textContent = "←";
+    }
+  });
+
+  // Música
+  let playing = false;
+  musicBtn.addEventListener("click", () => {
+    if (!playing) {
+      song.play();
+      musicBtn.textContent = "⏸ Pausar";
+    } else {
+      song.pause();
+      musicBtn.textContent = "▶ Reproducir";
+    }
+    playing = !playing;
+  });
+
+  // Corazones flotantes
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    const size = 12 + Math.random() * 24;
+    heart.style.setProperty('--size', size + 'px');
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = 4 + Math.random() * 3 + "s";
+    heartsContainer.appendChild(heart);
+    setTimeout(() => heart.remove(), 8000);
+  }
+  setInterval(createHeart, 500);
+</script>
+</body>
+</html>
+
