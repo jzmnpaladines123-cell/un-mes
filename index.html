@@ -1,293 +1,417 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1 Mes</title>
-<style>
-  body {
-    font-family: 'Poppins', sans-serif;
-    background: #ffffff;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    overflow: hidden;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1 Mes juntos</title>
+  <style>
+    /* 💖 Estilos para los corazones flotantes */
+    .corazones {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
 
-  h1 {
-    position: absolute;
-    top: 40px;
-    text-align: center;
-    color: #ff009d;
-    font-size: 32px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    z-index: 3;
-  }
+    .corazon {
+      position: absolute;
+      color: #ff4d6d;
+      font-size: 20px;
+      animation: flotar 6s linear infinite;
+      opacity: 0.8;
+    }
 
-  .container {
-    position: relative;
-    width: 320px;
-    height: 260px;
-    perspective: 1000px;
-    z-index: 2;
-    transition: transform 1s ease;
-  }
+    @keyframes flotar {
+      0% {
+        transform: translateY(100vh) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.5);
+        opacity: 0;
+      }
+    }
 
-  .envelope {
-    position: absolute;
-    width: 100%;
-    height: 200px;
-    bottom: 0;
-    background: #ffffff;
-    border-radius: 6px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-    overflow: hidden;
-    z-index: 1;
-    transition: opacity 0.6s ease;
-  }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #fff0f6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+    }
 
-  .flap {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background:#ff009d;
-    clip-path: polygon(0 0, 50% 55%, 100% 0);
-    transform-origin: top;
-    transition: transform 0.8s ease;
-    z-index: 3;
-  }
+    .pagina {
+      display: none;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
 
-  .letter {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translate(-50%, 90%);
-    width: 85%;
-    height: 130px;
-    background: #ed95cb;
-    border-radius: 6px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    padding: 15px;
-    box-sizing: border-box;
-    text-align: center;
-    opacity: 0;
-    transition: transform 1s ease, opacity 1s ease;
-    z-index: 2;
-  }
+    .pagina.activa {
+      display: block;
+    }
 
-  .letter p {
-    margin: 0;
-    color: #444;
-    font-size: 15px;
-    line-height: 1.4;
-  }
+    .portada h1 {
+      font-size: 40px;
+      color: #ff1493;
+      margin-bottom: 20px;
+    }
 
-  button {
-    background: #ff009d;
-    border: none;
-    color: white;
-    padding: 10px 24px;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.3);
-    transition: background 0.3s ease;
-  }
+    .boton {
+      background-color: #ff1493;
+      color: white;
+      font-weight: bold;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: 0.3s;
+    }
 
-  button:hover {
-    background: #ff4d6d;
-  }
+    .boton:hover {
+      background-color: #ff69b4;
+      transform: scale(1.05);
+    }
 
-  /* Botón Ver */
-  #openBtn {
-    position: absolute;
-    bottom: -70px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 5;
-  }
+    .card {
+      background-color: #ffe0f0;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+      margin-bottom: 25px;
+      display: inline-block;
+    }
 
-  /* Botón de pasar página */
-  #nextPageBtn {
-    position: absolute;
-    right: -90px;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 6;
-    padding: 10px 20px;
-  }
+    .card h2 {
+      color: #ff1493;
+      margin: 0 0 8px 0;
+    }
 
-  /* Segunda página */
-  .page2 {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 320px;
-    height: 260px;
-    background: #ffe4f1;
-    border-radius: 8px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    z-index: 10;
-  }
+    .sobre-container {
+      position: relative;
+      width: 280px;
+      height: 200px;
+      margin: 0 auto;
+      perspective: 1000px;
+    }
 
-  .page2 h2 {
-    color: #ff009d;
-    font-size: 26px;
-    margin-bottom: 20px;
-  }
+    .sobre {
+      position: absolute;
+      width: 100%;
+      height: 180px;
+      bottom: 0;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
 
-  .page2 button {
-    background: #ff009d;
-    color: #fff;
-    font-size: 16px;
-  }
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ff1493;
+      clip-path: polygon(0 0, 50% 60%, 100% 0);
+      transform-origin: top;
+      transition: transform 0.8s ease;
+      z-index: 3;
+    }
 
-  /* Corazones flotantes */
-  .heart {
-    --size: 24px;
-    position: absolute;
-    width: var(--size);
-    height: var(--size);
-    background: #ff009d;
-    transform: rotate(45deg);
-    animation: float 6s ease-in infinite;
-    opacity: 0.85;
-    pointer-events: none;
-  }
+    .carta {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, 90%);
+      width: 85%;
+      height: 130px;
+      background: #ed95cb;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      padding: 15px;
+      box-sizing: border-box;
+      text-align: center;
+      opacity: 0;
+      transition: transform 1s ease, opacity 1s ease;
+      z-index: 2;
+    }
 
-  .heart::before,
-  .heart::after {
-    content: '';
-    position: absolute;
-    width: var(--size);
-    height: var(--size);
-    background: #ff009d;
-    border-radius: 50%;
-  }
+    .carta p {
+      margin: 0;
+      color: #fff;
+      font-size: 15px;
+      line-height: 1.4;
+    }
 
-  .heart::before {
-    top: calc(-1 * var(--size) / 2);
-    left: 0;
-  }
+    .abierto .flap {
+      transform: rotateX(180deg);
+    }
 
-  .heart::after {
-    left: calc(-1 * var(--size) / 2);
-    top: 0;
-  }
+    .abierto .carta {
+      transform: translate(-50%, -20%);
+      opacity: 1;
+    }
 
-  @keyframes float {
-    0% { transform: translateY(0) rotate(45deg); opacity: 0.8; }
-    50% { opacity: 1; }
-    100% { transform: translateY(-100vh) rotate(45deg); opacity: 0; }
-  }
+    .flecha, .flecha-izquierda {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 20px;
+      color: #ff1493;
+    }
 
-  .open .flap {
-    transform: rotateX(180deg);
-  }
+    .flecha { right: 20px; }
+    .flecha-izquierda { left: 20px; }
 
-  .open .letter {
-    transform: translate(-50%, -20%);
-    opacity: 1;
-  }
-</style>
+    .galeria {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 60px;
+    }
+
+    .imagen {
+      text-align: center;
+    }
+
+    .imagen img {
+      width: 220px;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+
+    .imagen img:hover {
+      transform: scale(1.05);
+    }
+
+    .texto {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #ff1493;
+      font-size: 15px;
+    }
+
+    .boton-regresar {
+      background-color: #ff1493;
+      color: white;
+      font-weight: bold;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 10px;
+      margin-top: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .boton-regresar:hover {
+      background-color: #ff69b4;
+      transform: scale(1.05);
+    }
+  </style>
 </head>
 <body>
-  <div id="hearts"></div>
-  <h1>¡Llevamos 1 mes!</h1>
-  <h3>Ve a la otra pagina y reproduce la musica</h3>
+  <!-- Portada -->
+  <div class="pagina portada activa" id="portada">
+    <h1> Te dedico esta página por cumplir un mes juntos </h1>
+    <button class="boton" onclick="mostrarPagina('pagina1')">Entrar</button>
+  </div>
 
-  <div class="container" id="envelopeContainer">
-    <!-- Carta -->
-    <div class="envelope" id="envelope">
-      <div class="flap"></div>
-      <div class="letter">
-        <p>💌 ¡Hola! Esta es una carta especial para ti. Aquí puedes poner tu mensaje personal. 💖</p>
+  <!-- Página 1 -->
+  <div class="pagina" id="pagina1">
+    <div class="card">
+      <h2>Cariño - The Marías</h2>
+      <p>Te dedico esta canción</p>
+      <audio id="song" src="Cariño.mp3"></audio>
+      <button class="boton" id="musicBtn">▶ Reproducir</button>
+    </div>
+
+    <div class="sobre-container">
+      <div class="sobre" id="sobre">
+        <div class="flap"></div>
+        <div class="carta">
+          <p>hola</p>
+        </div>
       </div>
     </div>
 
-    <!-- Botón Ver -->
-    <button id="openBtn">Ver</button>
-
-    <!-- Segunda página -->
-    <div class="page2" id="page2">
-      <h2>Te dedico esta canción</h2>
-      <button id="musicBtn">▶ Reproducir</button>
-      <audio id="song" src="Cariño.mp3"></audio>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+      <button class="boton" id="verCartaBtn" style="margin-top: 30px;">Ver</button>
+      <button class="boton-regresar" onclick="mostrarPagina('portada')">Regresar a la portada</button>
     </div>
 
-    <!-- Botón de cambio de página -->
-    <button id="nextPageBtn">→</button>
+    <div class="flecha" onclick="mostrarPagina('pagina2')">➡</div>
   </div>
 
-<script>
-  const envelope = document.getElementById("envelope");
-  const openBtn = document.getElementById("openBtn");
-  const nextPageBtn = document.getElementById("nextPageBtn");
-  const page2 = document.getElementById("page2");
-  const musicBtn = document.getElementById("musicBtn");
-  const song = document.getElementById("song");
-  const heartsContainer = document.getElementById("hearts");
+  <!-- Página 2 -->
+  <div class="pagina" id="pagina2">
+    <div class="galeria">
+      <div class="imagen">
+        <img src="jojos.jpeg" alt="Imagen 1">
+        <div class="texto">Te amo tanto como tú amas JoJos</div>
+      </div>
+      <div class="imagen">
+        <img src="koichiyyukako.jpeg" alt="Imagen 2">
+        <div class="texto">Te amo tanto como Koichi y Yukako se aman</div>
+      </div>
+      <div class="imagen">
+        <img src="gato.jpeg" alt="Imagen 3">
+        <div class="texto">Te amo tanto como tú amas a los gatos</div>
+      </div>
+    </div>
 
-  // Abrir carta
-  openBtn.addEventListener("click", () => {
-    envelope.classList.toggle("open");
-    openBtn.textContent = envelope.classList.contains("open") ? "Cerrar" : "Ver";
-  });
+    <div class="flecha-izquierda" onclick="mostrarPagina('pagina1')">⬅</div>
+    <div class="flecha" onclick="mostrarPagina('pagina3')">➡</div>
 
-  // Pasar de página
-  nextPageBtn.addEventListener("click", () => {
-    const isOnPage2 = page2.style.display === "flex";
-    if (isOnPage2) {
-      page2.style.display = "none";
-      envelope.style.opacity = "1";
-      openBtn.style.display = "block"; // ← vuelve a mostrar el botón "Ver"
-      nextPageBtn.textContent = "→";
-    } else {
-      page2.style.display = "flex";
-      envelope.style.opacity = "0";
-      openBtn.style.display = "none"; // ← oculta el botón "Ver"
-      nextPageBtn.textContent = "←";
+    <!-- 💞 Contenedor de corazones flotantes -->
+    <div class="corazones"></div>
+  </div>
+
+  <!-- 💞 Página 3 -->
+  <div class="pagina" id="pagina3">
+    <h1>💖 Te amo, espero que cumplamos muchos más meses 💖</h1>
+    <div class="flecha-izquierda" onclick="mostrarPagina('pagina2')">⬅</div>
+    <button class="boton-regresar" onclick="mostrarPagina('portada')">Regresar a la portada</button>
+  </div>
+
+  <script>
+    // --- Carta ---
+    const sobre = document.getElementById("sobre");
+    const verCartaBtn = document.getElementById("verCartaBtn");
+    verCartaBtn.addEventListener("click", () => {
+      sobre.classList.toggle("abierto");
+      verCartaBtn.textContent = sobre.classList.contains("abierto") ? "Cerrar" : "Ver";
+    });
+
+    // --- Música ---
+    const song = document.getElementById("song");
+    const musicBtn = document.getElementById("musicBtn");
+    let playing = false;
+    musicBtn.addEventListener("click", () => {
+      if (!playing) {
+        song.play();
+        musicBtn.textContent = "⏸ Pausar";
+      } else {
+        song.pause();
+        musicBtn.textContent = "▶ Reproducir";
+      }
+      playing = !playing;
+    });
+
+    // --- Confeti ---
+    let confetiActivo = false, confetiCanvas, ctx, confetis = [], confetiInterval;
+    function crearConfeti() {
+      confetis = [];
+      for (let i = 0; i < 150; i++) {
+        confetis.push({
+          x: Math.random() * confetiCanvas.width,
+          y: Math.random() * confetiCanvas.height - confetiCanvas.height,
+          r: Math.random() * 6 + 3,
+          d: Math.random() * 50,
+          color: `hsl(${Math.random() * 360}, 100%, 60%)`,
+          tilt: Math.random() * 10 - 5
+        });
+      }
     }
-  });
-
-  // Música
-  let playing = false;
-  musicBtn.addEventListener("click", () => {
-    if (!playing) {
-      song.play();
-      musicBtn.textContent = "⏸ Pausar";
-    } else {
-      song.pause();
-      musicBtn.textContent = "▶ Reproducir";
+    function dibujarConfeti() {
+      ctx.clearRect(0, 0, confetiCanvas.width, confetiCanvas.height);
+      confetis.forEach(c => {
+        ctx.beginPath();
+        ctx.fillStyle = c.color;
+        ctx.ellipse(c.x, c.y, c.r, c.r / 2, Math.PI / 4, 0, 2 * Math.PI);
+        ctx.fill();
+      });
+      moverConfeti();
     }
-    playing = !playing;
-  });
+    function moverConfeti() {
+      confetis.forEach(c => {
+        c.y += Math.cos(c.d) + 1 + c.r / 2;
+        c.x += Math.sin(c.d);
+        if (c.y > confetiCanvas.height) {
+          c.y = -10;
+          c.x = Math.random() * confetiCanvas.width;
+        }
+      });
+    }
+    function iniciarConfeti() {
+      if (confetiActivo) return;
+      confetiActivo = true;
+      confetiCanvas = document.createElement('canvas');
+      confetiCanvas.style.position = 'fixed';
+      confetiCanvas.style.top = '0';
+      confetiCanvas.style.left = '0';
+      confetiCanvas.style.pointerEvents = 'none';
+      confetiCanvas.style.zIndex = '9999';
+      confetiCanvas.width = window.innerWidth;
+      confetiCanvas.height = window.innerHeight;
+      document.body.appendChild(confetiCanvas);
+      ctx = confetiCanvas.getContext('2d');
+      crearConfeti();
+      confetiInterval = setInterval(dibujarConfeti, 30);
+    }
+    function detenerConfeti() {
+      confetiActivo = false;
+      clearInterval(confetiInterval);
+      if (confetiCanvas) {
+        confetiCanvas.remove();
+        confetiCanvas = null;
+      }
+    }
 
-  // Corazones flotantes
-  function createHeart() {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    const size = 12 + Math.random() * 24;
-    heart.style.setProperty('--size', size + 'px');
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = 4 + Math.random() * 3 + "s";
-    heartsContainer.appendChild(heart);
-    setTimeout(() => heart.remove(), 8000);
-  }
-  setInterval(createHeart, 500);
-</script>
+    // --- Corazones flotantes ---
+    let corazonesInterval;
+    function crearCorazon() {
+      const contenedor = document.querySelector('#pagina2 .corazones');
+      if (!contenedor) return;
+      const corazon = document.createElement('div');
+      corazon.classList.add('corazon');
+      corazon.innerHTML = '❤️';
+      corazon.style.left = Math.random() * 100 + 'vw';
+      corazon.style.fontSize = Math.random() * 20 + 10 + 'px';
+      corazon.style.animationDuration = (Math.random() * 3 + 3) + 's';
+      contenedor.appendChild(corazon);
+      setTimeout(() => corazon.remove(), 6000);
+    }
+    function iniciarCorazones() {
+      if (corazonesInterval) return;
+      corazonesInterval = setInterval(crearCorazon, 200);
+    }
+    function detenerCorazones() {
+      clearInterval(corazonesInterval);
+      corazonesInterval = null;
+      const contenedor = document.querySelector('#pagina2 .corazones');
+      if (contenedor) contenedor.innerHTML = '';
+    }
+
+    // --- Mostrar página ---
+    function mostrarPagina(paginaId) {
+      document.querySelectorAll('.pagina').forEach(p => p.classList.remove('activa'));
+      document.getElementById(paginaId).classList.add('activa');
+
+      if (paginaId === 'pagina3') iniciarConfeti(); else detenerConfeti();
+      if (paginaId === 'pagina2') iniciarCorazones(); else detenerCorazones();
+    }
+  </script>
 </body>
 </html>
-
