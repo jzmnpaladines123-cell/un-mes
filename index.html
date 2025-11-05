@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -58,7 +58,10 @@
     }
 
     .pagina.activa {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
     }
 
     .portada h1 {
@@ -229,12 +232,14 @@
       background-color: #ff69b4;
       transform: scale(1.05);
     }
+
   </style>
 </head>
 <body>
   <!-- Portada -->
   <div class="pagina portada activa" id="portada">
-    <h1> Te dedico esta página por cumplir un mes juntos </h1>
+    <h1>Te dedico esta página por cumplir un mes juntos</h1>
+    <h2>Para Diego</h2>
     <button class="boton" onclick="mostrarPagina('pagina1')">Entrar</button>
   </div>
 
@@ -284,14 +289,66 @@
     <div class="flecha-izquierda" onclick="mostrarPagina('pagina1')">⬅</div>
     <div class="flecha" onclick="mostrarPagina('pagina3')">➡</div>
 
-    <!-- 💞 Contenedor de corazones flotantes -->
     <div class="corazones"></div>
   </div>
 
   <!-- 💞 Página 3 -->
   <div class="pagina" id="pagina3">
-    <h1>💖 Te amo, espero que cumplamos muchos más meses 💖</h1>
+    <h1 style="color:#ff1493; margin-bottom:20px;">💌 Un pequeño mensaje para ti 💌</h1>
+    <div class="cuadro-pagina3">
+      <p>
+        Desde que llegaste a mi vida, cada día se siente más bonito.  
+        No hay momento en que no piense en lo afortunada que soy de tenerte.  
+        Gracias por hacerme sentir amada, comprendida y feliz.  
+        Este primer mes contigo ha sido maravilloso, y sé que vendrán muchos más momentos inolvidables.  
+        💖 Te amo con todo mi corazón 💖
+        Desde que llegaste a mi vida, cada día se siente más bonito.  
+        No hay momento en que no piense en lo afortunada que soy de tenerte.  
+        Gracias por hacerme sentir amada, comprendida y feliz.  
+        Este primer mes contigo ha sido maravilloso, y sé que vendrán muchos más momentos inolvidables.Desde que llegaste a mi vida, cada día se siente más bonito.  
+        No hay momento en que no piense en lo afortunada que soy de tenerte.  
+        Gracias por hacerme sentir amada, comprendida y feliz.  
+        Este primer mes contigo ha sido maravilloso, y sé que vendrán muchos más momentos inolvidables.Desde que llegaste a mi vida, cada día se siente más bonito.  
+        No hay momento en que no piense en lo afortunada que soy de tenerte.  
+        Gracias por hacerme sentir amada, comprendida y feliz.  
+        Este primer mes contigo ha sido maravilloso, y sé que vendrán muchos más momentos inolvidables.
+      </p>
+    </div>
+
+    <div class="corazones" id="corazones-pagina3"></div>
     <div class="flecha-izquierda" onclick="mostrarPagina('pagina2')">⬅</div>
+    <div class="flecha" onclick="mostrarPagina('pagina4')">➡</div>
+
+    <style>
+      #pagina3 .cuadro-pagina3 {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 25px;
+        padding: 30px 40px;
+        max-width: 800px;
+        width: 95%;
+        box-shadow: 0 0 20px #ffb6c1;
+        animation: brillo3 3s ease-in-out infinite alternate;
+      max-height: 85vh;
+      overflow-y: auto;
+      }
+      @keyframes brillo3 {
+        0% { box-shadow: 0 0 15px #ffb6c1, 0 0 25px #ff69b4; }
+        50% { box-shadow: 0 0 30px #ff69b4, 0 0 45px #ff1493; }
+        100% { box-shadow: 0 0 15px #ffb6c1, 0 0 25px #ff69b4; }
+      }
+      #pagina3 p {
+        text-align: justify;
+        margin: 0;
+        color: #333;
+        font-size: 18px;
+      }
+    </style>
+  </div>
+
+  <!-- 💞 Página 4 -->
+  <div class="pagina" id="pagina4">
+    <h1>💖 Te amo, espero que cumplamos muchos más meses 💖</h1>
+    <div class="flecha-izquierda" onclick="mostrarPagina('pagina3')">⬅</div>
     <button class="boton-regresar" onclick="mostrarPagina('portada')">Regresar a la portada</button>
   </div>
 
@@ -379,10 +436,10 @@
       }
     }
 
-    // --- Corazones flotantes ---
+    // --- Corazones ---
     let corazonesInterval;
-    function crearCorazon() {
-      const contenedor = document.querySelector('#pagina2 .corazones');
+    function crearCorazon(paginaSelector) {
+      const contenedor = document.querySelector(paginaSelector + ' .corazones');
       if (!contenedor) return;
       const corazon = document.createElement('div');
       corazon.classList.add('corazon');
@@ -393,24 +450,26 @@
       contenedor.appendChild(corazon);
       setTimeout(() => corazon.remove(), 6000);
     }
-    function iniciarCorazones() {
+
+    function iniciarCorazones(paginaSelector) {
       if (corazonesInterval) return;
-      corazonesInterval = setInterval(crearCorazon, 200);
+      corazonesInterval = setInterval(() => crearCorazon(paginaSelector), 200);
     }
+
     function detenerCorazones() {
       clearInterval(corazonesInterval);
       corazonesInterval = null;
-      const contenedor = document.querySelector('#pagina2 .corazones');
-      if (contenedor) contenedor.innerHTML = '';
+      document.querySelectorAll('.corazones').forEach(c => c.innerHTML = '');
     }
 
     // --- Mostrar página ---
     function mostrarPagina(paginaId) {
       document.querySelectorAll('.pagina').forEach(p => p.classList.remove('activa'));
       document.getElementById(paginaId).classList.add('activa');
-
-      if (paginaId === 'pagina3') iniciarConfeti(); else detenerConfeti();
-      if (paginaId === 'pagina2') iniciarCorazones(); else detenerCorazones();
+      detenerCorazones();
+      detenerConfeti();
+      if (paginaId === 'pagina4') iniciarConfeti();
+      if (paginaId === 'pagina2' || paginaId === 'pagina3') iniciarCorazones('#' + paginaId);
     }
   </script>
 </body>
