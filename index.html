@@ -1,41 +1,10 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>1 Mes juntos</title>
   <style>
-    /* 💖 Estilos para los corazones flotantes */
-    .corazones {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .corazon {
-      position: absolute;
-      color: #ff4d6d;
-      font-size: 20px;
-      animation: flotar 6s linear infinite;
-      opacity: 0.8;
-    }
-
-    @keyframes flotar {
-      0% {
-        transform: translateY(100vh) scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-10vh) scale(1.5);
-        opacity: 0;
-      }
-    }
-
     body {
       font-family: 'Poppins', sans-serif;
       background-color: #fff0f6;
@@ -48,11 +17,24 @@
       overflow-x: hidden;
     }
 
+    /* 🌸 Portada */
+    .portada {
+      background: url('r.jpeg') no-repeat center center/cover;
+      color: white;
+      text-shadow: 0 0 10px #000;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
     .pagina {
       display: none;
       text-align: center;
       width: 100%;
-      height: 100%;
+      height: 100vh;
       position: relative;
       overflow: hidden;
     }
@@ -66,8 +48,15 @@
 
     .portada h1 {
       font-size: 40px;
-      color: #ff1493;
+      color: #ff52ae;
       margin-bottom: 20px;
+      text-shadow: 0 0 10px #fff;
+    }
+
+    .portada h2 {
+      color: #fff;
+      margin-bottom: 20px;
+      text-shadow: 0 0 8px #ff69b4;
     }
 
     .boton {
@@ -177,11 +166,31 @@
       padding: 8px 12px;
       cursor: pointer;
       font-size: 20px;
-      color: #ff1493;
+      color: #000010;
     }
 
     .flecha { right: 20px; }
     .flecha-izquierda { left: 20px; }
+
+    /* 💖 Corazones flotantes en página 2 */
+    #pagina2 {
+      background: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .corazon {
+      position: absolute;
+      color: #000010;
+      font-size: 22px;
+      opacity: 0.8;
+      animation: flotar 6s linear infinite;
+    }
+
+    @keyframes flotar {
+      0% { transform: translateY(100vh) scale(1); opacity: 0.9; }
+      100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+    }
 
     .galeria {
       display: flex;
@@ -189,10 +198,7 @@
       flex-wrap: wrap;
       gap: 30px;
       margin-top: 60px;
-    }
-
-    .imagen {
-      text-align: center;
+      z-index: 2;
     }
 
     .imagen img {
@@ -233,9 +239,73 @@
       transform: scale(1.05);
     }
 
+    /* 🌌 Página 4 galaxia */
+    #pagina4 {
+      background: radial-gradient(circle at center, #0b0f33 0%, #000010 100%);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #pagina4 .contenido {
+      background: rgba(0, 0, 30, 0.6);
+      border-radius: 20px;
+      padding: 30px;
+      width: 80%;
+      max-width: 700px;
+      box-shadow: 0 0 20px #9c88ff, 0 0 40px #6c5ce7;
+      text-align: center;
+    }
+
+    /* ✨ Brillos (página 4 y 5) */
+    .brillo {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: brillar 2s infinite ease-in-out;
+    }
+
+    @keyframes brillar {
+      0%, 100% { opacity: 0.2; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.5); }
+    }
+
+    /* 💖 Página final */
+    #pagina5 {
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(circle at center, #1b0034 0%, #000010 100%);
+      color: white;
+    }
+
+    /* 🌷 Cuadro lindo para página 3 */
+    .cuadro-pagina3 {
+      background: rgb(243, 187, 214);
+      border: 2px solid #f766b3;
+      border-radius: 25px;
+      padding: 25px 35px;
+      box-shadow: 0 0 15px rgb(243, 187, 214);
+      width: 70%;
+      max-width: 600px;
+      text-align: center;
+      color: #ffffff;
+      font-size: 17px;
+      line-height: 1.6;
+      backdrop-filter: blur(6px);
+      animation: brillarLento 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes brillarLento {
+      from { box-shadow: 0 0 15px rgba(255, 182, 193, 0.4); }
+      to { box-shadow: 0 0 25px rgba(255, 105, 180, 0.8); }
+    }
   </style>
 </head>
 <body>
+
   <!-- Portada -->
   <div class="pagina portada activa" id="portada">
     <h1>Te dedico esta página por cumplir un mes juntos</h1>
@@ -244,6 +314,9 @@
   </div>
 
   <!-- Página 1 -->
+   <div>
+    
+   </div>
   <div class="pagina" id="pagina1">
     <div class="card">
       <h2>Cariño - The Marías</h2>
@@ -255,105 +328,56 @@
     <div class="sobre-container">
       <div class="sobre" id="sobre">
         <div class="flap"></div>
-        <div class="carta">
-          <p>hola</p>
-        </div>
+        <div class="carta"><p>hola</p></div>
       </div>
     </div>
 
-    <div style="display: flex; flex-direction: column; align-items: center;">
-      <button class="boton" id="verCartaBtn" style="margin-top: 30px;">Ver</button>
+    <div style="display:flex;flex-direction:column;align-items:center;">
+      <button class="boton" id="verCartaBtn" style="margin-top:30px;">Ver</button>
       <button class="boton-regresar" onclick="mostrarPagina('portada')">Regresar a la portada</button>
     </div>
-
     <div class="flecha" onclick="mostrarPagina('pagina2')">➡</div>
   </div>
 
-  <!-- Página 2 -->
+  <!-- 💞 Página 2 (corazones flotantes) -->
   <div class="pagina" id="pagina2">
     <div class="galeria">
-      <div class="imagen">
-        <img src="jojos.jpeg" alt="Imagen 1">
-        <div class="texto">Te amo tanto como tú amas JoJos</div>
-      </div>
-      <div class="imagen">
-        <img src="koichiyyukako.jpeg" alt="Imagen 2">
-        <div class="texto">Te amo tanto como Koichi y Yukako se aman</div>
-      </div>
-      <div class="imagen">
-        <img src="gato.jpeg" alt="Imagen 3">
-        <div class="texto">Te amo tanto como tú amas a los gatos</div>
-      </div>
+      <div class="imagen"><img src="jojos.jpeg"><div class="texto">Te amo tanto como tú amas JoJos</div></div>
+      <div class="imagen"><img src="koichiyyukako.jpeg"><div class="texto">Te amo tanto como Koichi y Yukako se aman</div></div>
+      <div class="imagen"><img src="gato.jpeg"><div class="texto">Te amo tanto como tú amas a los gatos</div></div>
     </div>
-
     <div class="flecha-izquierda" onclick="mostrarPagina('pagina1')">⬅</div>
     <div class="flecha" onclick="mostrarPagina('pagina3')">➡</div>
-
-    <div class="corazones"></div>
   </div>
 
-  <!-- 💞 Página 3 -->
+  <!-- 💌 Página 3 -->
   <div class="pagina" id="pagina3">
     <h1 style="color:#ff1493; margin-bottom:20px;">💌 Un pequeño mensaje para ti 💌</h1>
     <div class="cuadro-pagina3">
-      <p>
-        Desde que llegaste a mi vida, cada día se siente más bonito.  
-        No hay momento en que no piense en lo afortunada que soy de tenerte.  
-        Gracias por hacerme sentir amada, comprendida y feliz.  
-        Este primer mes contigo ha sido maravilloso, y sé que vendrán muchos más momentos inolvidables.  
-        💖 Te amo con todo mi corazón 💖
-        Desde que llegaste a mi vida, cada día se siente más bonito.  
-        No hay momento en que no piense en lo afortunada que soy de tenerte.  
-        Gracias por hacerme sentir amada, comprendida y feliz.  
-        Este primer mes contigo ha sido maravilloso, y sé que vendrán muchos más momentos inolvidables.Desde que llegaste a mi vida, cada día se siente más bonito.  
-        No hay momento en que no piense en lo afortunada que soy de tenerte.  
-        Gracias por hacerme sentir amada, comprendida y feliz.  
-        Este primer mes contigo ha sido maravilloso, y sé que vendrán muchos más momentos inolvidables.Desde que llegaste a mi vida, cada día se siente más bonito.  
-        No hay momento en que no piense en lo afortunada que soy de tenerte.  
-        Gracias por hacerme sentir amada, comprendida y feliz.  
-        Este primer mes contigo ha sido maravilloso, y sé que vendrán muchos más momentos inolvidables.
-      </p>
+      <p>Desde...</p>
     </div>
-
-    <div class="corazones" id="corazones-pagina3"></div>
     <div class="flecha-izquierda" onclick="mostrarPagina('pagina2')">⬅</div>
     <div class="flecha" onclick="mostrarPagina('pagina4')">➡</div>
-
-    <style>
-      #pagina3 .cuadro-pagina3 {
-        background: rgba(255, 255, 255, 0.9);
-        border-radius: 25px;
-        padding: 30px 40px;
-        max-width: 800px;
-        width: 95%;
-        box-shadow: 0 0 20px #ffb6c1;
-        animation: brillo3 3s ease-in-out infinite alternate;
-      max-height: 85vh;
-      overflow-y: auto;
-      }
-      @keyframes brillo3 {
-        0% { box-shadow: 0 0 15px #ffb6c1, 0 0 25px #ff69b4; }
-        50% { box-shadow: 0 0 30px #ff69b4, 0 0 45px #ff1493; }
-        100% { box-shadow: 0 0 15px #ffb6c1, 0 0 25px #ff69b4; }
-      }
-      #pagina3 p {
-        text-align: justify;
-        margin: 0;
-        color: #333;
-        font-size: 18px;
-      }
-    </style>
   </div>
 
-  <!-- 💞 Página 4 -->
+  <!-- 🌌 Página 4 galaxia -->
   <div class="pagina" id="pagina4">
-    <h1>💖 Te amo, espero que cumplamos muchos más meses 💖</h1>
+    <div class="contenido">
+      <h2> "I need that kind of love, a supernova glowing in the dark."</h2>
+      <p>Porque cuando llegaste a mi oscuridad, provocaste una supernova de amor e iluminaste mi universo. </p>
+    </div>
     <div class="flecha-izquierda" onclick="mostrarPagina('pagina3')">⬅</div>
-    <button class="boton-regresar" onclick="mostrarPagina('portada')">Regresar a la portada</button>
+    <div class="flecha" onclick="mostrarPagina('pagina5')">➡</div>
+  </div>
+
+  <!-- 💖 Página final -->
+  <div class="pagina" id="pagina5">
+    <h3 style="color:#fff ;"> Eres la estrella más brillante de todas, sin importar la distancia que nos separe, 
+      tu luz siempre llega a mí. </h3>
+    <div class="flecha-izquierda" onclick="mostrarPagina('pagina4')">⬅</div>
   </div>
 
   <script>
-    // --- Carta ---
     const sobre = document.getElementById("sobre");
     const verCartaBtn = document.getElementById("verCartaBtn");
     verCartaBtn.addEventListener("click", () => {
@@ -361,115 +385,49 @@
       verCartaBtn.textContent = sobre.classList.contains("abierto") ? "Cerrar" : "Ver";
     });
 
-    // --- Música ---
     const song = document.getElementById("song");
     const musicBtn = document.getElementById("musicBtn");
     let playing = false;
     musicBtn.addEventListener("click", () => {
-      if (!playing) {
-        song.play();
-        musicBtn.textContent = "⏸ Pausar";
-      } else {
-        song.pause();
-        musicBtn.textContent = "▶ Reproducir";
-      }
+      if (!playing) { song.play(); musicBtn.textContent = "⏸ Pausar"; }
+      else { song.pause(); musicBtn.textContent = "▶ Reproducir"; }
       playing = !playing;
     });
 
-    // --- Confeti ---
-    let confetiActivo = false, confetiCanvas, ctx, confetis = [], confetiInterval;
-    function crearConfeti() {
-      confetis = [];
-      for (let i = 0; i < 150; i++) {
-        confetis.push({
-          x: Math.random() * confetiCanvas.width,
-          y: Math.random() * confetiCanvas.height - confetiCanvas.height,
-          r: Math.random() * 6 + 3,
-          d: Math.random() * 50,
-          color: `hsl(${Math.random() * 360}, 100%, 60%)`,
-          tilt: Math.random() * 10 - 5
-        });
-      }
-    }
-    function dibujarConfeti() {
-      ctx.clearRect(0, 0, confetiCanvas.width, confetiCanvas.height);
-      confetis.forEach(c => {
-        ctx.beginPath();
-        ctx.fillStyle = c.color;
-        ctx.ellipse(c.x, c.y, c.r, c.r / 2, Math.PI / 4, 0, 2 * Math.PI);
-        ctx.fill();
-      });
-      moverConfeti();
-    }
-    function moverConfeti() {
-      confetis.forEach(c => {
-        c.y += Math.cos(c.d) + 1 + c.r / 2;
-        c.x += Math.sin(c.d);
-        if (c.y > confetiCanvas.height) {
-          c.y = -10;
-          c.x = Math.random() * confetiCanvas.width;
-        }
-      });
-    }
-    function iniciarConfeti() {
-      if (confetiActivo) return;
-      confetiActivo = true;
-      confetiCanvas = document.createElement('canvas');
-      confetiCanvas.style.position = 'fixed';
-      confetiCanvas.style.top = '0';
-      confetiCanvas.style.left = '0';
-      confetiCanvas.style.pointerEvents = 'none';
-      confetiCanvas.style.zIndex = '9999';
-      confetiCanvas.width = window.innerWidth;
-      confetiCanvas.height = window.innerHeight;
-      document.body.appendChild(confetiCanvas);
-      ctx = confetiCanvas.getContext('2d');
-      crearConfeti();
-      confetiInterval = setInterval(dibujarConfeti, 30);
-    }
-    function detenerConfeti() {
-      confetiActivo = false;
-      clearInterval(confetiInterval);
-      if (confetiCanvas) {
-        confetiCanvas.remove();
-        confetiCanvas = null;
-      }
-    }
-
-    // --- Corazones ---
-    let corazonesInterval;
-    function crearCorazon(paginaSelector) {
-      const contenedor = document.querySelector(paginaSelector + ' .corazones');
-      if (!contenedor) return;
-      const corazon = document.createElement('div');
-      corazon.classList.add('corazon');
-      corazon.innerHTML = '❤️';
-      corazon.style.left = Math.random() * 100 + 'vw';
-      corazon.style.fontSize = Math.random() * 20 + 10 + 'px';
-      corazon.style.animationDuration = (Math.random() * 3 + 3) + 's';
-      contenedor.appendChild(corazon);
-      setTimeout(() => corazon.remove(), 6000);
-    }
-
-    function iniciarCorazones(paginaSelector) {
-      if (corazonesInterval) return;
-      corazonesInterval = setInterval(() => crearCorazon(paginaSelector), 200);
-    }
-
-    function detenerCorazones() {
-      clearInterval(corazonesInterval);
-      corazonesInterval = null;
-      document.querySelectorAll('.corazones').forEach(c => c.innerHTML = '');
-    }
-
-    // --- Mostrar página ---
     function mostrarPagina(paginaId) {
       document.querySelectorAll('.pagina').forEach(p => p.classList.remove('activa'));
       document.getElementById(paginaId).classList.add('activa');
-      detenerCorazones();
-      detenerConfeti();
-      if (paginaId === 'pagina4') iniciarConfeti();
-      if (paginaId === 'pagina2' || paginaId === 'pagina3') iniciarCorazones('#' + paginaId);
+      if (paginaId === 'pagina4' || paginaId === 'pagina5') iniciarBrillos(paginaId);
+      if (paginaId === 'pagina2') iniciarCorazones();
+    }
+
+    // ✨ Brillos animados para galaxia y final
+    function iniciarBrillos(id) {
+      const pagina = document.getElementById(id);
+      pagina.querySelectorAll('.brillo').forEach(b => b.remove());
+      for (let i = 0; i < 80; i++) {
+        const brillo = document.createElement('div');
+        brillo.classList.add('brillo');
+        brillo.style.top = Math.random() * 100 + '%';
+        brillo.style.left = Math.random() * 100 + '%';
+        brillo.style.animationDelay = Math.random() * 2 + 's';
+        pagina.appendChild(brillo);
+      }
+    }
+
+    // 💕 Corazones flotantes en página 2
+    function iniciarCorazones() {
+      const pagina = document.getElementById('pagina2');
+      pagina.querySelectorAll('.corazon').forEach(c => c.remove());
+      for (let i = 0; i < 25; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('corazon');
+        heart.textContent = '💗';
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.animationDelay = Math.random() * 4 + 's';
+        heart.style.fontSize = 16 + Math.random() * 16 + 'px';
+        pagina.appendChild(heart)
+      }
     }
   </script>
 </body>
