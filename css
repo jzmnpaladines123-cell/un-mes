@@ -1,0 +1,7 @@
+.portada {
+  background-image: url('fondo.jpg') /*por tu imagen */
+  background-size: cover; /* Hace que cubra toda la pantalla */
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white; /* Opcional, mejora contraste */
+}

@@ -83,6 +83,8 @@
       box-shadow: 0 5px 12px rgba(0,0,0,0.15);
       margin-bottom: 25px;
       display: inline-block;
+      position: relative;
+      z-index: 2;
     }
 
     .card h2 {
@@ -96,6 +98,7 @@
       height: 200px;
       margin: 0 auto;
       perspective: 1000px;
+      z-index: 2;
     }
 
     .sobre {
@@ -228,14 +231,14 @@
       transform: scale(1.05);
     }
 
-    /* 💗 corazones flotantes */
+    /* 💗 Corazones flotantes */
     .corazon {
       position: absolute;
       color: #ff5ca9;
       font-size: 18px;
       animation: flotar 6s linear infinite;
       opacity: 0.8;
-      pointer-events: none; /* no bloquean clics */
+      pointer-events: none;
       z-index: 1;
     }
 
@@ -244,46 +247,31 @@
       100% { transform: translateY(-110vh) scale(1.3); opacity: 0; }
     }
 
-    /* 🌌 Página 4 galaxia */
-    #pagina4 {
-      background: radial-gradient(circle at center, #0b0f33 0%, #000010 100%);
-      color: white;
-      position: relative;
-      overflow: hidden;
-    }
-
-    #pagina4 .contenido {
-      background: rgba(0, 0, 30, 0.6);
-      border-radius: 20px;
-      padding: 30px;
-      width: 80%;
-      max-width: 700px;
-      box-shadow: 0 0 20px #9c88ff, 0 0 40px #6c5ce7;
-      text-align: center;
-    }
-
     /* ✨ Brillos */
     .brillo {
       position: absolute;
       width: 3px;
       height: 3px;
-      background: white;
       border-radius: 50%;
       opacity: 0.8;
       animation: brillar 2s infinite ease-in-out;
+      pointer-events: none;
+    }
+
+    /* 💕 Brillos rosados suaves para página 1 */
+    #pagina1 .brillo {
+      background: rgba(255, 192, 203, 0.8);
+      box-shadow: 0 0 8px rgba(255, 182, 193, 0.8);
+    }
+
+    /* 🌌 Brillos blancos para páginas 4 y 5 */
+    #pagina4 .brillo, #pagina5 .brillo {
+      background: white;
     }
 
     @keyframes brillar {
-      0%, 100% { opacity: 0.2; transform: scale(1); }
+      0%, 100% { opacity: 0.3; transform: scale(1); }
       50% { opacity: 1; transform: scale(1.5); }
-    }
-
-    /* 💖 Página final */
-    #pagina5 {
-      position: relative;
-      overflow: hidden;
-      background: radial-gradient(circle at center, #1b0034 0%, #000010 100%);
-      color: white;
     }
 
     /* 🌷 Cuadro página 3 */
@@ -307,6 +295,32 @@
       from { box-shadow: 0 0 15px rgba(255, 182, 193, 0.4); }
       to { box-shadow: 0 0 25px rgba(255, 105, 180, 0.8); }
     }
+
+    /* 🌌 Página 4 galaxia */
+    #pagina4 {
+      background: radial-gradient(circle at center, #0b0f33 0%, #000010 100%);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #pagina4 .contenido {
+      background: rgba(0, 0, 30, 0.6);
+      border-radius: 20px;
+      padding: 30px;
+      width: 80%;
+      max-width: 700px;
+      box-shadow: 0 0 20px #9c88ff, 0 0 40px #6c5ce7;
+      text-align: center;
+    }
+
+    /* 💖 Página final */
+    #pagina5 {
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(circle at center, #1b0034 0%, #000010 100%);
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -318,7 +332,7 @@
     <button class="boton" onclick="mostrarPagina('pagina1')">Entrar</button>
   </div>
 
-  <!-- Página 1 -->
+  <!-- Página 1 con brillos -->
   <div class="pagina" id="pagina1">
     <div class="card">
       <h2>Cariño - The Marías</h2>
@@ -330,7 +344,7 @@
     <div class="sobre-container">
       <div class="sobre" id="sobre">
         <div class="flap"></div>
-        <div class="carta"><p>hola</p></div>
+        <div class="carta"><p>Porque entre tanto caos tu eres la obra de arte que me da paz.</p></div>
       </div>
     </div>
 
@@ -354,9 +368,13 @@
 
   <!-- 💌 Página 3 -->
   <div class="pagina" id="pagina3">
-    <h1 style="color:#ff1493; margin-bottom:20px;">💌 Un pequeño mensaje para ti 💌</h1>
+    <h1 style="color:#ff1493; margin-bottom:20px;">Mi luz</h1>
     <div class="cuadro-pagina3">
-      <p>Desde...</p>
+      <p>Tu llegada a mi vida ha sido como el volver a ver la luz del día. Después de tanto tiempo encerrada en mi soledad, llegaste tú para iluminar mi vida con esa linda voz, con tu contagiosa risa, con tu inmadura pero encantadora forma de ser, con la manera en que hablas de lo que te gusta, con la forma en que me tratas y con todo tu ser. Has hecho de mí una persona afortunada por tenerte.
+<br><br>
+​Tu presencia en mi vida me hace querer ser una mejor persona, porque te veo en cada cosa que hay a mi alrededor. A cada momento del día pienso en ti y en tu amor, ese amor que me hace ver todo de otra manera.
+<br><br>
+​Llevo tiempo sin sentirme sola y eso es una prueba de tu efecto en mí.</p>
     </div>
     <div class="flecha-izquierda" onclick="mostrarPagina('pagina2')">⬅</div>
     <div class="flecha" onclick="mostrarPagina('pagina4')">➡</div>
@@ -380,60 +398,65 @@
   </div>
 
   <script>
-    const sobre = document.getElementById("sobre");
-    const verCartaBtn = document.getElementById("verCartaBtn");
-    verCartaBtn.addEventListener("click", () => {
-      sobre.classList.toggle("abierto");
-      verCartaBtn.textContent = sobre.classList.contains("abierto") ? "Cerrar" : "Ver";
-    });
+  const sobre = document.getElementById("sobre");
+  const verCartaBtn = document.getElementById("verCartaBtn");
+  verCartaBtn.addEventListener("click", () => {
+    sobre.classList.toggle("abierto");
+    verCartaBtn.textContent = sobre.classList.contains("abierto") ? "Cerrar" : "Ver";
+  });
 
-    const song = document.getElementById("song");
-    const musicBtn = document.getElementById("musicBtn");
-    let playing = false;
-    musicBtn.addEventListener("click", () => {
-      if (!playing) { song.play(); musicBtn.textContent = "⏸ Pausar"; }
-      else { song.pause(); musicBtn.textContent = "▶ Reproducir"; }
-      playing = !playing;
-    });
+  const song = document.getElementById("song");
+  const musicBtn = document.getElementById("musicBtn");
+  let playing = false;
+  musicBtn.addEventListener("click", () => {
+    if (!playing) { song.play(); musicBtn.textContent = "⏸ Pausar"; }
+    else { song.pause(); musicBtn.textContent = "▶ Reproducir"; }
+    playing = !playing;
+  });
 
-    function mostrarPagina(paginaId) {
-      document.querySelectorAll('.pagina').forEach(p => p.classList.remove('activa'));
-      document.getElementById(paginaId).classList.add('activa');
+  function mostrarPagina(paginaId) {
+    document.querySelectorAll('.pagina').forEach(p => p.classList.remove('activa'));
+    document.getElementById(paginaId).classList.add('activa');
 
-      if (paginaId === 'pagina4' || paginaId === 'pagina5') iniciarBrillos(paginaId);
-      if (paginaId === 'pagina2') iniciarCorazones(); 
+    if (paginaId === 'pagina1') iniciarBrillos('pagina1');
+    if (paginaId === 'pagina2') iniciarCorazones(); 
+    if (paginaId === 'pagina4' || paginaId === 'pagina5') iniciarBrillos(paginaId);
+  }
+
+  // ✨ Brillos animados
+  function iniciarBrillos(id) {
+    const pagina = document.getElementById(id);
+    pagina.querySelectorAll('.brillo').forEach(b => b.remove());
+    const cantidad = id === 'pagina1' ? 40 : 80;
+    for (let i = 0; i < cantidad; i++) {
+      const brillo = document.createElement('div');
+      brillo.classList.add('brillo');
+      brillo.style.top = Math.random() * 100 + '%';
+      brillo.style.left = Math.random() * 100 + '%';
+      brillo.style.animationDelay = Math.random() * 2 + 's';
+      pagina.appendChild(brillo);
     }
+  }
 
-    // ✨ Brillos animados
-    function iniciarBrillos(id) {
-      const pagina = document.getElementById(id);
-      pagina.querySelectorAll('.brillo').forEach(b => b.remove());
-      for (let i = 0; i < 80; i++) {
-        const brillo = document.createElement('div');
-        brillo.classList.add('brillo');
-        brillo.style.top = Math.random() * 100 + '%';
-        brillo.style.left = Math.random() * 100 + '%';
-        brillo.style.animationDelay = Math.random() * 2 + 's';
-        pagina.appendChild(brillo);
-      }
+  // 💗 Corazones flotantes
+  function iniciarCorazones() {
+    const pagina = document.getElementById('pagina2');
+    pagina.querySelectorAll('.corazon').forEach(c => c.remove());
+    const cantidad = 25;
+    for (let i = 0; i < cantidad; i++) {
+      const corazon = document.createElement('div');
+      corazon.classList.add('corazon');
+      corazon.innerHTML = '💗'; // 💖 Aquí se agrega el corazón visible
+      corazon.style.left = Math.random() * 100 + '%'; // ← corregido
+      corazon.style.bottom = '-20px';
+      corazon.style.fontSize = (12 + Math.random() * 20) + 'px';
+      corazon.style.animationDuration = (4 + Math.random() * 4) + 's';
+      corazon.style.animationDelay = Math.random() * 3 + 's';
+      pagina.appendChild(corazon);
     }
+  }
+</script>
 
-    // 💗 Corazones flotantes en página 2
-    function iniciarCorazones() {
-      const pagina = document.getElementById('pagina2');
-      pagina.querySelectorAll('.corazon').forEach(c => c.remove());
-      for (let i = 0; i < 25; i++) {
-        const corazon = document.createElement('div');
-        corazon.classList.add('corazon');
-        corazon.innerHTML = '💗';
-        corazon.style.left = Math.random() * 100 + '%';
-        corazon.style.bottom = '-20px';
-        corazon.style.fontSize = (12 + Math.random() * 20) + 'px';
-        corazon.style.animationDuration = (4 + Math.random() * 4) + 's';
-        corazon.style.animationDelay = Math.random() * 3 + 's';
-        pagina.appendChild(corazon);
-      }
-    }
-  </script>
+
 </body>
 </html>
