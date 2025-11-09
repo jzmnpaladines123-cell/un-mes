@@ -181,15 +181,17 @@
 
     .corazon {
       position: absolute;
-      color: #000010;
+      bottom: -20px; /* Comienzan desde abajo */
+      color: #ff69b4;
       font-size: 22px;
       opacity: 0.8;
       animation: flotar 6s linear infinite;
+      pointer-events: none; /* 💫 No bloquean clics */
     }
 
     @keyframes flotar {
-      0% { transform: translateY(100vh) scale(1); opacity: 0.9; }
-      100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+      0% { transform: translateY(0) scale(1); opacity: 0.9; }
+      100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
     }
 
     .galeria {
@@ -314,9 +316,6 @@
   </div>
 
   <!-- Página 1 -->
-   <div>
-    
-   </div>
   <div class="pagina" id="pagina1">
     <div class="card">
       <h2>Cariño - The Marías</h2>
@@ -363,8 +362,8 @@
   <!-- 🌌 Página 4 galaxia -->
   <div class="pagina" id="pagina4">
     <div class="contenido">
-      <h2> "I need that kind of love, a supernova glowing in the dark."</h2>
-      <p>Porque cuando llegaste a mi oscuridad, provocaste una supernova de amor e iluminaste mi universo. </p>
+      <h2>"I need that kind of love, a supernova glowing in the dark."</h2>
+      <p>Porque cuando llegaste a mi oscuridad, provocaste una supernova de amor e iluminaste mi universo.</p>
     </div>
     <div class="flecha-izquierda" onclick="mostrarPagina('pagina3')">⬅</div>
     <div class="flecha" onclick="mostrarPagina('pagina5')">➡</div>
@@ -372,8 +371,8 @@
 
   <!-- 💖 Página final -->
   <div class="pagina" id="pagina5">
-    <h3 style="color:#fff ;"> Eres la estrella más brillante de todas, sin importar la distancia que nos separe, 
-      tu luz siempre llega a mí. </h3>
+    <h3 style="color:#fff;">Eres la estrella más brillante de todas, sin importar la distancia que nos separe, 
+      tu luz siempre llega a mí.</h3>
     <div class="flecha-izquierda" onclick="mostrarPagina('pagina4')">⬅</div>
   </div>
 
@@ -401,7 +400,7 @@
       if (paginaId === 'pagina2') iniciarCorazones();
     }
 
-    // ✨ Brillos animados para galaxia y final
+    // ✨ Brillos animados
     function iniciarBrillos(id) {
       const pagina = document.getElementById(id);
       pagina.querySelectorAll('.brillo').forEach(b => b.remove());
@@ -415,7 +414,7 @@
       }
     }
 
-    // 💕 Corazones flotantes en página 2
+    // 💕 Corazones flotantes desde abajo
     function iniciarCorazones() {
       const pagina = document.getElementById('pagina2');
       pagina.querySelectorAll('.corazon').forEach(c => c.remove());
@@ -426,7 +425,7 @@
         heart.style.left = Math.random() * 100 + '%';
         heart.style.animationDelay = Math.random() * 4 + 's';
         heart.style.fontSize = 16 + Math.random() * 16 + 'px';
-        pagina.appendChild(heart)
+        pagina.appendChild(heart);
       }
     }
   </script>
